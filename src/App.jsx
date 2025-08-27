@@ -1,11 +1,4 @@
-import Button from '@mui/material/Button'
-import AccessAlarmIcon from '@mui/icons-material/AccessAlarm'
-import ThreeDRotation from '@mui/icons-material/ThreeDRotation'
-import HomeIcon from '@mui/icons-material/Home'
-import { pink } from '@mui/material/colors'
-import Typography from '@mui/material/Typography'
 import { useColorScheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
@@ -14,6 +7,7 @@ import LightModeIcon from '@mui/icons-material/LightMode'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness'
 import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
 function ModeSelect() {
   const { mode, setMode } = useColorScheme()
   const handleChange = (event) => {
@@ -23,7 +17,7 @@ function ModeSelect() {
 
   return (
     <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-      <InputLabel id="label-select-dark-light-mode">Age</InputLabel>
+      <InputLabel id="label-select-dark-light-mode">Mode</InputLabel>
       <Select
         labelId="label-select-dark-light-mode"
         id="select-dark-light-mode"
@@ -50,45 +44,40 @@ function ModeSelect() {
     </FormControl>
   )
 }
-function ModeToggle() {
-  const { mode, setMode } = useColorScheme()
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
-  return (
-    <Button
-      onClick={() => {
-        setMode(mode === 'light' ? 'dark' : 'light')
-      }}
-    >
-      {mode === 'light' ? 'Turn dark' : 'Turn light'}
-    </Button>
-  )
-}
+
 function App() {
 
   return (
-    <>
-      <ModeSelect />
-      <hr />
-      <ModeToggle />
-      <hr />
-      <div>trungquandev</div>
-      <Typography variant="body2" color="text.secondary">Test Tpo</Typography>
+    <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
 
-      <Button variant="text">Text</Button>
-      <Button variant="contained">Contained</Button>
-      <Button variant="outlined">Outlined</Button>
-
-      <br />
-      <AccessAlarmIcon />
-      <ThreeDRotation />
-      <HomeIcon />
-      <HomeIcon color="primary" />
-      <HomeIcon color="secondary" />
-      <HomeIcon color="success" />
-      <HomeIcon color="action" />
-      <HomeIcon color="disabled" />
-      <HomeIcon sx={{ color: pink[500] }} />
-    </>
+      <Box sx={{
+        backgroundColor: 'primary.light',
+        width: '100%',
+        height: (theme) => theme.trelloCustom.appBarHeight,
+        display: 'flex',
+        alignItems: 'center'
+      }}>
+        <ModeSelect />
+      </Box>
+      <Box sx={{
+        backgroundColor: 'primary.dark',
+        width: '100%',
+        height: (theme) => theme.trelloCustom.boardBarHeight,
+        display: 'flex',
+        alignItems: 'center'
+      }}>
+        Boar Bar
+      </Box>
+      <Box sx={{
+        backgroundColor: 'primary.main',
+        width: '100%',
+        height: (theme) => `calc(100vh - ${theme.trelloCustom.appBarHeight} - ${theme.trelloCustom.boardBarHeight})`,
+        display: 'flex',
+        alignItems: 'center'
+      }}>
+        Board content
+      </Box>
+    </Container>
   )
 }
 
