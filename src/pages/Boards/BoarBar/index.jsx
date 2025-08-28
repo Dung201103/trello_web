@@ -1,15 +1,75 @@
 import Box from '@mui/material/Box'
-
+import Chip from '@mui/material/Chip';
+import DashboardIcon from '@mui/icons-material/Dashboard'
+import VpnLockIcon from '@mui/icons-material/VpnLock'
+import AddToDriveIcon from '@mui/icons-material/AddToDrive'
+import BoltIcon from '@mui/icons-material/Bolt'
+import FilterListIcon from '@mui/icons-material/FilterList'
+import Avatar from '@mui/material/Avatar'
+import AvatarGroup from '@mui/material/AvatarGroup'
+import Tooltip from '@mui/material/Tooltip'
+import Button from '@mui/material/Button'
+import PersonAddIcon from '@mui/icons-material/PersonAdd'
+const Menu_Styles = {
+  color: 'primary.main', bgcolor: 'white', border: 'none', paddingX: '5px', borderRadius: '4px',
+  '& .MuiSvgIcon-root': {
+    color: 'primary.main'
+  },
+  '&:hover': {
+    bgcolor: 'primary.50'
+  }
+}
 function BoarBar() {
   return (
-    <Box sx={{
-      backgroundColor: 'primary.dark',
+    <Box px={2} sx={{
       width: '100%',
-      height: (theme) => theme.trelloCustom.boardBarHeight,
+      height: (theme) => theme.trelloCustom.appBarHeight,
       display: 'flex',
-      alignItems: 'center'
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: 2,
+      overflowX: 'auto',
+      borderTop: '1px solid #00bfa5'
     }}>
-      Boar Bar
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+        <Chip sx=
+          {Menu_Styles}
+          icon={<DashboardIcon />} label="Dungle bot"
+          clickable />
+        <Chip sx=
+          {Menu_Styles}
+          icon={<VpnLockIcon />} label="Public/Private Workspace"
+          clickable />
+        <Chip sx=
+          {Menu_Styles}
+          icon={<AddToDriveIcon />} label="Add To Google Drive"
+          clickable />
+        <Chip sx=
+          {Menu_Styles}
+          icon={<BoltIcon />} label="Automation"
+          clickable />
+        <Chip sx=
+          {Menu_Styles}
+          icon={<FilterListIcon />} label="Filter"
+          clickable />
+      </Box>
+
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+        <Button variant="outlined" startIcon={<PersonAddIcon />} >Invite</Button>
+        <AvatarGroup max={4}
+          sx={{
+            '& .MuiAvatar-root': {
+              width: 34,
+              height: 34,
+              fontSize: 16
+            }
+          }}>
+          <Tooltip title='dungle'>
+            <Avatar alt="Dungle"
+              src='https://i-vnexpress.vnecdn.net/2023/07/24/VNE-Jellyfish-2907-1690173899.jpg' />
+          </Tooltip>
+        </AvatarGroup>
+      </Box>
     </Box>
   )
 }

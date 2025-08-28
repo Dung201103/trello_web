@@ -32,7 +32,7 @@ function Profiles() {
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
         >
-          <Avatar sx={{ width: 30, height: 30 }}
+          <Avatar sx={{ width: 34, height: 34 }}
             alt='dungle'
             src='https://i-vnexpress.vnecdn.net/2023/07/24/VNE-Jellyfish-2907-1690173899.jpg'
           />
