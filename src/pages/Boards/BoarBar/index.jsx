@@ -27,7 +27,7 @@ function BoarBar() {
   return (
     <Box px={2} sx={{
       width: '100%',
-      height: (theme) => theme.trelloCustom.appBarHeight,
+      height: (theme) => theme.trello.appBarHeight,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -68,16 +68,27 @@ function BoarBar() {
           }}
           variant="outlined"
           startIcon={<PersonAddIcon />} >Invite</Button>
-        <AvatarGroup max={4}
+        <AvatarGroup max={1}
           sx={{
             gap: '10px',
             '& .MuiAvatar-root': {
               width: 34,
               height: 34,
               fontSize: 16,
-              border: 'none'
+              border: 'none',
+              color: 'white',
+              cursor: 'pointer',
+              '&:first-of-type': { bgcolor: '#a4b0be' }
             }
           }}>
+          <Tooltip title='dungle'>
+            <Avatar alt="Dungle"
+              src='https://i-vnexpress.vnecdn.net/2023/07/24/VNE-Jellyfish-2907-1690173899.jpg' />
+          </Tooltip>
+          <Tooltip title='dungle'>
+            <Avatar alt="Dungle"
+              src='https://i-vnexpress.vnecdn.net/2023/07/24/VNE-Jellyfish-2907-1690173899.jpg' />
+          </Tooltip>
           <Tooltip title='dungle'>
             <Avatar alt="Dungle"
               src='https://i-vnexpress.vnecdn.net/2023/07/24/VNE-Jellyfish-2907-1690173899.jpg' />
