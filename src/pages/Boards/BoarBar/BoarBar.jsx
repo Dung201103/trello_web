@@ -10,6 +10,7 @@ import AvatarGroup from '@mui/material/AvatarGroup'
 import Tooltip from '@mui/material/Tooltip'
 import Button from '@mui/material/Button'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
+import { capitalizeFirstLetter } from '~/utils/formatters';
 const Menu_Styles = {
   color: 'white',
   bgcolor: 'transparent',
@@ -23,7 +24,8 @@ const Menu_Styles = {
     bgcolor: 'primary.50'
   }
 }
-function BoarBar() {
+function BoarBar({ board }) {
+
   return (
     <Box px={2} sx={{
       width: '100%',
@@ -38,11 +40,11 @@ function BoarBar() {
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         <Chip sx=
           {Menu_Styles}
-          icon={<DashboardIcon />} label="Dungle bot"
+          icon={<DashboardIcon />} label={board?.title}
           clickable />
         <Chip sx=
           {Menu_Styles}
-          icon={<VpnLockIcon />} label="Public/Private Workspace"
+          icon={<VpnLockIcon />} label={capitalizeFirstLetter(board?.type)}
           clickable />
         <Chip sx=
           {Menu_Styles}

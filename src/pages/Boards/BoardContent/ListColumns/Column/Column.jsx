@@ -17,12 +17,13 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import AddCardIcon from '@mui/icons-material/AddCard'
 import DragHandleIcon from '@mui/icons-material/DragHandle'
 import ListCards from './ListCards/ListCards'
-import theme from '~/theme'
+import { mapOrder } from '~/utils/sorts'
 
 
-function Column() {
+function Column({ column }) {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
+  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
@@ -53,7 +54,7 @@ function Column() {
           fontWeight: 'bold',
           cursor: 'pointer'
         }}>
-          Column title
+          {column?.title}
         </Typography>
         <Box>
           <Tooltip title='More options'>
@@ -117,8 +118,10 @@ function Column() {
           </Menu>
         </Box>
       </Box>
+
       {/* Box column list card */}
-      <ListCards />
+      <ListCards cards={orderedCards} />
+
       {/* Box column footer */}
       <Box sx={{
         height: (theme) => theme.trello.columnFooterHeight,
