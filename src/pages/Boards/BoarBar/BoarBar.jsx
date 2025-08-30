@@ -69,7 +69,7 @@ function BoarBar({ board }) {
           }}
           variant="outlined"
           startIcon={<PersonAddIcon />} >Invite</Button>
-        <AvatarGroup max={1}
+        <AvatarGroup max={2}
           sx={{
             gap: '10px',
             '& .MuiAvatar-root': {
