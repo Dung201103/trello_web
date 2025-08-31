@@ -21,19 +21,25 @@ import { mapOrder } from '~/utils/sorts'
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
+
 function Column({ column }) {
   const {
     attributes,
     listeners,
     setNodeRef,
     transform,
-    transition
+    transition,
+    isDragging
   } = useSortable({ id: column._id, data: { ...column } })
 
   const dndKitColumnstyle = {
-    touchAction: 'none',
+    touchAction: 'none', // danh cho pointer sensors dang con tro
+
     transform: CSS.Translate.toString(transform),
-    transition
+    transition,
+    opacity: isDragging ? 0.5 : undefined
+    // bug flecring thi phai de height 100 va boc div ngoai box , luu y su kien {...listener} phai nam trong box tranh bug
+    // height: '100%'
   }
 
   const [anchorEl, setAnchorEl] = useState(null)
@@ -46,8 +52,12 @@ function Column({ column }) {
     setAnchorEl(null)
   }
   return (
-
-    <Box ref={setNodeRef}
+    // <div ref={setNodeRef}
+    //   style={dndKitColumnstyle}
+    //   {...attributes}
+    //   {...listeners}>
+    <Box
+      ref={setNodeRef}
       style={dndKitColumnstyle}
       {...attributes}
       {...listeners}
@@ -155,6 +165,7 @@ function Column({ column }) {
         </Tooltip>
       </Box>
     </Box>
+    // </div>
   )
 }
 

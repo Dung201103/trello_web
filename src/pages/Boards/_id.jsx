@@ -3,7 +3,7 @@ import AppBar from '../../components/AppBar/AppBar'
 import BoarBar from './BoarBar/BoarBar'
 import BoardContent from './BoardContent/BoardContent'
 import { mockData } from '~/apis/mock-data'
-function Board({ board }) {
+function Board() {
   return (
     <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
       <AppBar />
