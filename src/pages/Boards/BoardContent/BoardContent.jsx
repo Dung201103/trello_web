@@ -214,17 +214,18 @@ function BoardContent({ board }) {
     }
     // Tim cac diem giao nhau , va cham - intersections voi con tro
     const pointerIntersections = pointerWithin(args);
-    //Thuat toan phat hien va cham se tra ve mot mang va cham tai day
-    const intersections = !!pointerIntersections.length
-      ? pointerIntersections
-      : rectIntersection(args)
+    if (!pointerIntersections?.length) return
+    // //Thuat toan phat hien va cham se tra ve mot mang va cham tai day
+    // const intersections = !!pointerIntersections.length
+    //   ? pointerIntersections
+    //   : rectIntersection(args)
     //Tim overId dau tien trong dam intersections o tren
-    let overId = getFirstCollision(intersections, 'id')
+    let overId = getFirstCollision(pointerIntersections, 'id')
     if (overId) {
       const checkColumn = orderedColumns.find(column => column._id === overId)
       if (checkColumn) {
         // console.log('overId before', overId)
-        overId = closestCenter({
+        overId = closestCorners({
           ...args,
           droppableContainers: args.droppableContainers.filter(container => {
             return (container.id !== overId) && (checkColumn?.cardOrderIds?.includes(container.id))
