@@ -1,7 +1,7 @@
 
 import Box from '@mui/material/Box'
 import ListColumns from './ListColumns/ListColumns'
-import { mapOrder } from '~/utils/sorts'
+
 import {
   DndContext,
   PointerSensor,
@@ -30,7 +30,7 @@ const ACTIVE_DRAG_ITEM_TYPE = {
   COLUMN: 'ACTIVE_DRAG_ITEM_TYPE_COLUMN',
   CARD: 'ACTIVE_DRAG_ITEM_TYPE_CARD'
 }
-function BoardContent({ board, createNewColumn, createNewCard, moveColumns }) {
+function BoardContent({ board, createNewColumn, createNewCard, moveColumns, moveCardInTheSameColumn }) {
   // chuot di chuyen 10px thi moi goi event
   // const pointerSensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
   const mouseSensor = useSensor(MouseSensor, { activationConstraint: { distance: 10 } })
@@ -47,7 +47,7 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns }) {
   const lastOverId = useRef(null)
 
   useEffect(() => {
-    setOrderedColumns(mapOrder(board?.columns, board?.columnOrderIds, '_id'))
+    setOrderedColumns(board.columns)
   }, [board])
   //Tim mot cai column theo cardId
   const findColumnByCardId = (cardId) => {
@@ -179,17 +179,18 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns }) {
         const newCardIndex = overColumn?.cards?.findIndex(c => c._id === overCardId)
         // Dùng array move để xắp xếp cards
         const dndorderedCards = arrayMove(oldColumnWhenDraggingCard?.cards, oldCardIndex, newCardIndex)
-        console.log("dnd", dndorderedCards)
+        const dndorderedCardIds = dndorderedCards.map(card => card._id)
         setOrderedColumns(prevColumns => {
           const nextColumns = cloneDeep(prevColumns)
           //Tim toi column dang tha
           const targetColumn = nextColumns.find(c => c._id === overColumn._id)
           //Cap nhat lai hai gia tri moi card va cardorderIds
           targetColumn.cards = dndorderedCards
-          targetColumn.cardOrderIds = dndorderedCards.map(card => card._id)
+          targetColumn.cardOrderIds = dndorderedCardIds
           //Tra ve gia tri state moi chuan vi tri 
           return nextColumns
         })
+        moveCardInTheSameColumn(dndorderedCards, dndorderedCardIds, oldColumnWhenDraggingCard._id)
       }
     }
     //Xu ly keo tha column
@@ -202,12 +203,11 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns }) {
         const newColumnIndex = orderedColumns.findIndex(c => c._id === over.id)
         // Dùng array move để xắp xếp columns
         const dndorderedColumns = arrayMove(orderedColumns, oldColumnIndex, newColumnIndex)
-        // Xử lý dữ liệu call api
 
-
-        moveColumns(dndorderedColumns)
         //Cập nhật lại state columns sau khi kéo thả
         setOrderedColumns(dndorderedColumns)
+        // Xử lý dữ liệu call api
+        moveColumns(dndorderedColumns)
       }
     }
 
