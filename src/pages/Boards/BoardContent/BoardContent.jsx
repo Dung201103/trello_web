@@ -30,7 +30,7 @@ const ACTIVE_DRAG_ITEM_TYPE = {
   COLUMN: 'ACTIVE_DRAG_ITEM_TYPE_COLUMN',
   CARD: 'ACTIVE_DRAG_ITEM_TYPE_CARD'
 }
-function BoardContent({ board, createNewColumn, createNewCard, moveColumns, moveCardInTheSameColumn }) {
+function BoardContent({ board, createNewColumn, createNewCard, moveColumns, moveCardInTheSameColumn, moveCardToDifferentColumn }) {
   // chuot di chuyen 10px thi moi goi event
   // const pointerSensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
   const mouseSensor = useSensor(MouseSensor, { activationConstraint: { distance: 10 } })
@@ -53,7 +53,10 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns, move
   const findColumnByCardId = (cardId) => {
     return orderedColumns.find(column => column?.cards?.map(card => card._id)?.includes(cardId))
   }
-  const moveCardBetweenDifferentColumns = (overColumn, overCardId, active, over, activeColumn, activeDraggingCardId, activeDraggingCardData) => {
+  const moveCardBetweenDifferentColumns = (
+    overColumn, overCardId, active, over, activeColumn, activeDraggingCardId, activeDraggingCardData,
+    triggerFrom
+  ) => {
     setOrderedColumns(prevColumns => {
       //Tim vi tri cua overcard trong column dich
       const overCardIndex = overColumn?.cards?.findIndex(card => card._id === overCardId)
@@ -98,7 +101,9 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns, move
         //Cap nhat lai mang oderids cho chuan du lieu
         nextOverColumn.cardOrderIds = nextOverColumn.cards.map(card => card._id)
       }
-
+      if (triggerFrom === 'handleDragEnd') {
+        moveCardToDifferentColumn(activeDraggingCardId, oldColumnWhenDraggingCard._id, nextOverColumn._id, nextColumns)
+      }
       return nextColumns
     })
   }
@@ -144,7 +149,10 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns, move
     if (!activeColumn || !overColumn) return
     // XU ly logic khi keo card qua column khac thi moi thuc hien
     if (activeColumn._id !== overColumn._id) {
-      moveCardBetweenDifferentColumns(overColumn, overCardId, active, over, activeColumn, activeDraggingCardId, activeDraggingCardData)
+      moveCardBetweenDifferentColumns(
+        overColumn, overCardId, active, over, activeColumn, activeDraggingCardId, activeDraggingCardData,
+        'handleDragOver'
+      )
     }
   }
 
@@ -170,7 +178,10 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns, move
       if (!activeColumn || !overColumn) return
       //Keo tha giua 2 column
       if (oldColumnWhenDraggingCard._id !== overColumn._id) {
-        moveCardBetweenDifferentColumns(overColumn, overCardId, active, over, activeColumn, activeDraggingCardId, activeDraggingCardData)
+        moveCardBetweenDifferentColumns(
+          overColumn, overCardId, active, over, activeColumn, activeDraggingCardId, activeDraggingCardData,
+          'handleDragEnd'
+        )
       } else {
         //Keo tha giua 1 column
         //Lay vi tri cu (tu thang active)

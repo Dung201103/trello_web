@@ -4,7 +4,10 @@ import BoarBar from './BoarBar/BoarBar'
 import BoardContent from './BoardContent/BoardContent'
 import { mockData } from '~/apis/mock-data'
 import { useEffect, useState } from 'react'
-import { fetchBoardDetailsAPI, createNewColumnAPI, createNewCardAPI, updateBoardDetailsAPI, updateColumnDetailsAPI } from '~/apis'
+import {
+  fetchBoardDetailsAPI, createNewColumnAPI, createNewCardAPI,
+  updateBoardDetailsAPI, updateColumnDetailsAPI, moveCardToDifferentColumnAPI
+} from '~/apis'
 import { generatePlaceholderCard } from '~/utils/formatters'
 import { isEmpty } from 'lodash'
 import { mapOrder } from '~/utils/sorts'
@@ -77,8 +80,24 @@ function Board() {
       columnToUpdate.cardOrderIds = dndorderedCardIds
     }
     setBoard(newBoard)
-
+    //Call api
     updateColumnDetailsAPI(columnId, { cardOrderIds: dndorderedCardIds })
+  }
+  const moveCardToDifferentColumn = (currentCardId, prevColumnId, nextColumnId, dndorderedColumns) => {
+    //Update cho chuan du lieu state board
+    const dndorderedColumnsIds = dndorderedColumns.map(c => c._id)
+    const newBoard = { ...board }
+    newBoard.columns = dndorderedColumns
+    newBoard.columnOrderIds = dndorderedColumnsIds
+    setBoard(newBoard)
+    //Call API
+    moveCardToDifferentColumnAPI({
+      currentCardId,
+      prevColumnId,
+      prevCardOrderIds: dndorderedColumns.find(c => c._id === prevColumnId)?.cardOrderIds,
+      nextColumnId,
+      nextCardOrderIds: dndorderedColumns.find(c => c._id === nextColumnId)?.cardOrderIds
+    })
   }
   if (!board) {
     return (
@@ -93,7 +112,7 @@ function Board() {
       <AppBar />
       <BoarBar board={board} />
       <BoardContent board={board} createNewColumn={createNewColumn} createNewCard={createNewCard} moveColumns={moveColumns}
-        moveCardInTheSameColumn={moveCardInTheSameColumn}
+        moveCardInTheSameColumn={moveCardInTheSameColumn} moveCardToDifferentColumn={moveCardToDifferentColumn}
       />
     </Container>
   )
