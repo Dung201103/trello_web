@@ -40,8 +40,8 @@ function Board() {
         boardId: board._id
       }
     )
-    column.cards = [generatePlaceholderCard(column)]
-    column.cardOrderIds = [generatePlaceholderCard(column)._id]
+    createdColumn.cards = [generatePlaceholderCard(createdColumn)]
+    createdColumn.cardOrderIds = [generatePlaceholderCard(createdColumn)._id]
     const newBoard = { ...board }
     newBoard.columns.push(createdColumn)
     newBoard.columnOrderIds.push(createdColumn._id)
@@ -57,9 +57,17 @@ function Board() {
     const newBoard = { ...board }
     const columnToUpdate = newBoard.columns.find(column => column._id === createdCard.columnId)
     if (columnToUpdate) {
-      columnToUpdate.cards.push(createdCard)
-      columnToUpdate.cardOrderIds.push(createdCard._id)
+      //Neu column rong 
+      if (columnToUpdate.cards.some(card => card.FE_PlaceholderCard)) {
+        columnToUpdate.cards = [createdCard]
+        columnToUpdate.cardOrderIds = [createdCard._id]
+      } else {
+        //Nguoc lai neu column da co data thi push vao cuoi mang
+        columnToUpdate.cards.push(createdCard)
+        columnToUpdate.cardOrderIds.push(createdCard._id)
+      }
     }
+    console.log("🚀 ~ createNewCard ~ columnToUpdate:", columnToUpdate)
     setBoard(newBoard)
   }
   const moveColumns = (dndorderedColumns) => {
@@ -90,11 +98,15 @@ function Board() {
     newBoard.columns = dndorderedColumns
     newBoard.columnOrderIds = dndorderedColumnsIds
     setBoard(newBoard)
+
     //Call API
+    let prevCardOrderIds = dndorderedColumns.find(c => c._id === prevColumnId)?.cardOrderIds
+    //Xu ly van de khi keo card cuoi cung ra khoi column
+    if (prevCardOrderIds[0].includes('placeholder-card')) prevCardOrderIds = []
     moveCardToDifferentColumnAPI({
       currentCardId,
       prevColumnId,
-      prevCardOrderIds: dndorderedColumns.find(c => c._id === prevColumnId)?.cardOrderIds,
+      prevCardOrderIds,
       nextColumnId,
       nextCardOrderIds: dndorderedColumns.find(c => c._id === nextColumnId)?.cardOrderIds
     })
