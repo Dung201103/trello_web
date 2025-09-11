@@ -6,13 +6,15 @@ import { mockData } from '~/apis/mock-data'
 import { useEffect, useState } from 'react'
 import {
   fetchBoardDetailsAPI, createNewColumnAPI, createNewCardAPI,
-  updateBoardDetailsAPI, updateColumnDetailsAPI, moveCardToDifferentColumnAPI
+  updateBoardDetailsAPI, updateColumnDetailsAPI, moveCardToDifferentColumnAPI,
+  deleteColumnDetailsAPI
 } from '~/apis'
 import { generatePlaceholderCard } from '~/utils/formatters'
 import { isEmpty } from 'lodash'
 import { mapOrder } from '~/utils/sorts'
 import { Box, Typography } from '@mui/material'
 import CircularProgress from '@mui/material/CircularProgress';
+import { toast } from 'react-toastify'
 function Board() {
   const [board, setBoard] = useState(null)
   useEffect(() => {
@@ -111,6 +113,19 @@ function Board() {
       nextCardOrderIds: dndorderedColumns.find(c => c._id === nextColumnId)?.cardOrderIds
     })
   }
+  //Xu ly xoa mot column va card ben trong no
+  const deleteColumnDetails = (columnId) => {
+    const newBoard = { ...board }
+    newBoard.columns = newBoard.columns.filter(c => c._id !== columnId)
+    newBoard.columnOrderIds = newBoard.columnOrderIds.filter(_id => _id !== columnId)
+    setBoard(newBoard)
+
+
+    deleteColumnDetailsAPI(columnId).then(res => {
+      toast.success(res?.deleteResult)
+    })
+  }
+
   if (!board) {
     return (
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2, width: '100vw', height: '100vh' }}>
@@ -123,8 +138,11 @@ function Board() {
     <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
       <AppBar />
       <BoarBar board={board} />
-      <BoardContent board={board} createNewColumn={createNewColumn} createNewCard={createNewCard} moveColumns={moveColumns}
+      <BoardContent board={board}
+
+        createNewColumn={createNewColumn} createNewCard={createNewCard} moveColumns={moveColumns}
         moveCardInTheSameColumn={moveCardInTheSameColumn} moveCardToDifferentColumn={moveCardToDifferentColumn}
+        deleteColumnDetails={deleteColumnDetails}
       />
     </Container>
   )
