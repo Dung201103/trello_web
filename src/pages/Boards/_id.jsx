@@ -5,21 +5,23 @@ import BoardContent from './BoardContent/BoardContent'
 import { useEffect, useState } from 'react'
 import {
   updateBoardDetailsAPI, updateColumnDetailsAPI, moveCardToDifferentColumnAPI,
-  deleteColumnDetailsAPI
 } from '~/apis'
 import { cloneDeep } from 'lodash'
 import { Box, Typography } from '@mui/material'
 import CircularProgress from '@mui/material/CircularProgress'
-import { toast } from 'react-toastify'
+
 import { fetchBoardDetailsAPI, updateCurrentActiveBoard, selectCurrentActiveBoard } from '~/redux/activeBoard/activeBoardSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 function Board() {
   const dispatch = useDispatch()
   const board = useSelector(selectCurrentActiveBoard)
+  const { boardId } = useParams()
   useEffect(() => {
-    const boardId = '68bd00f2023deade0c2accd1'
+    // const boardId = '68bd00f2023deade0c2accd1'
+
     dispatch(fetchBoardDetailsAPI(boardId))
-  }, [dispatch])
+  }, [dispatch, boardId])
 
 
   const moveColumns = (dndorderedColumns) => {
