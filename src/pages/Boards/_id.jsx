@@ -20,6 +20,7 @@ function Board() {
     // const boardId = '68bd00f2023deade0c2accd1'
 
     dispatch(fetchBoardDetailsAPI(boardId))
+
   }, [dispatch, boardId])
 
 
