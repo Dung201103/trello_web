@@ -1,6 +1,26 @@
 {
   "rewrites": [
     {
+      "source": "/boards/(.*)",
+      "destination": "/"
+    },
+    {
+      "source": "/settings/(.*)",
+      "destination": "/"
+    },
+    {
+      "source": "/login",
+      "destination": "/"
+    },
+    {
+      "source": "/register",
+      "destination": "/"
+    },
+    {
+      "source": "/account/(.*)",
+      "destination": "/"
+    },
+    {
       "source": "/(.*)",
       "destination": "/"
     }
