@@ -26,6 +26,14 @@ export const logoutUserAPI = createAsyncThunk(
     return response.data
   }
 )
+export const updateUserAPI = createAsyncThunk(
+  'user/updateUserAPI',
+  async (data) => {
+    const response = await authorizedAxiosInstance.put(`${API_ROOT}/v1/users/update`, data)
+    return response.data
+  }
+)
+
 //Khởi tạo một slice trong kho lưu trữ redux
 export const userSlice = createSlice({
   name: 'user',
@@ -42,6 +50,11 @@ export const userSlice = createSlice({
     builder.addCase(logoutUserAPI.fulfilled, (state) => {
       //action.payload chinh la response.data tra ve
       state.currentUser = null
+    })
+    builder.addCase(updateUserAPI.fulfilled, (state, action) => {
+      //action.payload chinh la response.data tra ve
+      const user = action.payload
+      state.currentUser = user
     })
   }
 })
