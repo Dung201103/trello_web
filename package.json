@@ -10,7 +10,7 @@
   },
   "scripts": {
     "dev": "cross-env BUILD_MODE=dev vite --host",
-    "build": "cross-env BUILD_MODE=production vite build --base=./",
+    "build": "cross-env BUILD_MODE=production vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -28,6 +28,7 @@
     "cross-env": "^7.0.3",
     "lodash": "^4.17.21",
     "material-ui-confirm": "^3.0.9",
+    "randomcolor": "^0.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.49.3",
