@@ -1,4 +1,4 @@
-// TrungQuanDev: https://youtube.com/@trungquandev
+
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
@@ -24,7 +24,7 @@ function NotFound() {
         animation: 'stars 12s linear infinite alternate',
         width: '100%',
         height: '100%',
-        backgroundImage: 'url("src/assets/404/particles.png")',
+        backgroundImage: 'url("/assets/404/particles.png")',
         backgroundSize: 'contain',
         backgroundRepeat: 'repeat',
         backgroundPosition: 'center',
@@ -50,7 +50,7 @@ function NotFound() {
           }}>
             &nbsp;SPACE&nbsp;
           </Typography>
-          &nbsp;<Typography variant="span" sx={{ color: '#fdba26', fontWeight: 500 }}>TrungQuanDev</Typography>?<br />Hmm, looks like that page doesn&apos;t exist.
+          &nbsp;<Typography variant="span" sx={{ color: '#fdba26', fontWeight: 500 }}>DungLeDev</Typography>?<br />Hmm, looks like that page doesn&apos;t exist.
         </Typography>
         <Box sx={{ width: '390px', height: '390px', position: 'relative' }}>
           <SvgIcon component={AstronautSvg} inheritViewBox sx={{
