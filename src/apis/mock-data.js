@@ -1,11 +1,8 @@
-/**
- * YouTube: TrungQuanDev - Một Lập Trình Viên
- * Created by trungquandev.com's author on Jun 28, 2023
- */
+
 export const mockData = {
   board: {
     _id: 'board-id-01',
-    title: 'TrungQuanDev MERN Stack Board',
+    title: 'DungDev MERN Stack Board',
     description: 'Pro MERN stack Course',
     type: 'public', // 'private'
     ownerIds: [], // Những users là Admin của board
@@ -62,7 +59,7 @@ export const mockData = {
       {
         _id: 'column-id-04',
         boardId: 'board-id-01',
-        title: 'Emty',  
+        title: 'Emty',
         cardOrderIds: ['column-id-04-placeholder-card'],
         cards: [
           { _id: 'column-id-04-placeholder-card', boardId: 'board-id-01', columnId: 'column-id-04', FE_PlaceholderCard: true }
