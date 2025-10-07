@@ -10,7 +10,8 @@ import AvatarGroup from '@mui/material/AvatarGroup'
 import Tooltip from '@mui/material/Tooltip'
 import Button from '@mui/material/Button'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
-import { capitalizeFirstLetter } from '~/utils/formatters';
+import { capitalizeFirstLetter } from '~/utils/formatters'
+import BoardUserGroup from './BoardUserGroup';
 const Menu_Styles = {
   color: 'white',
   bgcolor: 'transparent',
@@ -70,33 +71,11 @@ function BoarBar({ board }) {
             '&:hover': { borderColor: 'white' }
           }}
           variant="outlined"
-          startIcon={<PersonAddIcon />} >Invite</Button>
-        <AvatarGroup max={2}
-          sx={{
-            gap: '10px',
-            '& .MuiAvatar-root': {
-              width: 34,
-              height: 34,
-              fontSize: 16,
-              border: 'none',
-              color: 'white',
-              cursor: 'pointer',
-              '&:first-of-type': { bgcolor: '#a4b0be' }
-            }
-          }}>
-          <Tooltip title='dungle'>
-            <Avatar alt="Dungle"
-              src='https://i-vnexpress.vnecdn.net/2023/07/24/VNE-Jellyfish-2907-1690173899.jpg' />
-          </Tooltip>
-          <Tooltip title='dungle'>
-            <Avatar alt="Dungle"
-              src='https://i-vnexpress.vnecdn.net/2023/07/24/VNE-Jellyfish-2907-1690173899.jpg' />
-          </Tooltip>
-          <Tooltip title='dungle'>
-            <Avatar alt="Dungle"
-              src='https://i-vnexpress.vnecdn.net/2023/07/24/VNE-Jellyfish-2907-1690173899.jpg' />
-          </Tooltip>
-        </AvatarGroup>
+          startIcon={<PersonAddIcon />} >
+          Invite
+        </Button>
+        {/* XU ly hien thi danh sach thanh vien group */}
+        <BoardUserGroup />
       </Box>
     </Box>
   )

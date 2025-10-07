@@ -9,9 +9,13 @@ import CardMedia from '@mui/material/CardMedia'
 import GroupIcon from '@mui/icons-material/Group'
 import CommentIcon from '@mui/icons-material/Comment'
 import AttachmentIcon from '@mui/icons-material/Attachment'
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+import { useDispatch } from 'react-redux'
+import { updateCurrentActiveCard } from '~/redux/activeCard/activeCardSlice'
+
 function Card({ card }) {
+  const dispatch = useDispatch()
   const {
     attributes,
     listeners,
@@ -31,8 +35,14 @@ function Card({ card }) {
   const shouldShowCardActions = () => {
     return !!card?.memberIds?.length || !!card?.comments?.length || !!card?.attachments?.length
   }
+  const setActiveCard = () => {
+    //Cap nhat data cho active card trong redux
+    dispatch(updateCurrentActiveCard(card))
+  }
   return (
-    <MuiCard ref={setNodeRef}
+    <MuiCard
+      onClick={setActiveCard}
+      ref={setNodeRef}
       style={dndKitCardstyle}
       {...attributes}
       {...listeners}

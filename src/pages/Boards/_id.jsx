@@ -12,9 +12,12 @@ import { fetchBoardDetailsAPI, updateCurrentActiveBoard, selectCurrentActiveBoar
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import PageLoadingSpinner from '~/components/Loading/PageLoadingSpinner'
+import ActiveCard from '~/components/Modal/ActiveCard/ActiveCard'
+import { selectCurrentActiveCard } from '~/redux/activeCard/activeCardSlice'
 function Board() {
   const dispatch = useDispatch()
   const board = useSelector(selectCurrentActiveBoard)
+  const activeCard = useSelector(selectCurrentActiveCard)
   const { boardId } = useParams()
   useEffect(() => {
     // const boardId = '68bd00f2023deade0c2accd1'
@@ -73,6 +76,8 @@ function Board() {
   }
   return (
     <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
+      {activeCard && <ActiveCard />}
+
       <AppBar />
       <BoarBar board={board} />
       <BoardContent board={board}
