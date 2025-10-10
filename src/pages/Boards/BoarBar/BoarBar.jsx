@@ -75,7 +75,7 @@ function BoarBar({ board }) {
           Invite
         </Button>
         {/* XU ly hien thi danh sach thanh vien group */}
-        <BoardUserGroup />
+        <BoardUserGroup boardUsers={board?.FE_allUsers} />
       </Box>
     </Box>
   )
