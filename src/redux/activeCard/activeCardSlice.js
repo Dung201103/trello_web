@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 //Khởi tạo giá trị state trong redux
 const initialState = {
-  currentActiveCard: null
+  currentActiveCard: null,
+  isShowModalActiveCard: false
 }
 
 
@@ -12,8 +13,12 @@ export const activeCardSlice = createSlice({
   initialState,
   // Nơi xử lý dữ liệu đồng bộ
   reducers: {
-    clearCurrentActiveCard: (state) => {
+    showModalActiveCard: (state) => {
+      state.isShowModalActiveCard = true
+    },
+    clearAndHideCurrentActiveCard: (state) => {
       state.currentActiveCard = null
+      state.isShowModalActiveCard = false
     },
     updateCurrentActiveCard: (state, action) => {
       const fullCard = action.payload
@@ -27,10 +32,13 @@ export const activeCardSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { clearCurrentActiveCard, updateCurrentActiveCard } = activeCardSlice.actions
+export const { showModalActiveCard, clearAndHideCurrentActiveCard, updateCurrentActiveCard } = activeCardSlice.actions
 //Selectors
 export const selectCurrentActiveCard = (state) => {
   return state.activeCard.currentActiveCard
+}
+export const selectIsShowModalActiveCard = (state) => {
+  return state.activeCard.isShowModalActiveCard
 }
 // export default activeCardSlice.reducer
 export const activeCardReducer = activeCardSlice.reducer
