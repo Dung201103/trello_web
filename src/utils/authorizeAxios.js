@@ -73,6 +73,11 @@ authorizedAxiosInstance.interceptors.response.use((response) => {
   if (error.response?.data?.message) {
     errorMessage = error.response?.data?.message
   }
+  else if (error.message) {
+    errorMessage = error.message
+  } else {
+    errorMessage = `Request failed with status code ${error.response?.status || 'unknown'}`
+  }
   if (error.response?.status !== 410) {
     toast.error(errorMessage)
   }
