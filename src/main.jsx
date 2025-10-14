@@ -16,13 +16,20 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 //Ky thuat inject store
 import { injectStore } from './utils/authorizeAxios.js'
+//Cau hinh socketio
+import { io } from 'socket.io-client';
+import { API_ROOT } from './utils/constants.js'
+
+export const socketIoInstance = io(API_ROOT)
+
 injectStore(store)
-const persistor = persistStore(store);
+const persistor = persistStore(store)
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <BrowserRouter basename='/'>
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
+
+  <Provider store={store}>
+    <PersistGate persistor={persistor}>
+      <BrowserRouter basename='/'>
         <CssVarsProvider theme={theme}>
           <ConfirmProvider defaultOptions={{
             dialogProps: { maxWidth: 'xs' },
@@ -35,7 +42,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <ToastContainer position="bottom-left" theme="colored" />
           </ConfirmProvider>
         </CssVarsProvider>
-      </PersistGate>
-    </Provider>
-  </BrowserRouter>
+      </BrowserRouter>
+    </PersistGate>
+  </Provider >
+
 )
